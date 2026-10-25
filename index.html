@@ -7,6 +7,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.4.0/exceljs.min.js"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
 <style>
 *{box-sizing:border-box}
 body{margin:0;background:#e9ecef;font-family:Arial,Helvetica,sans-serif;color:#000}
@@ -62,13 +63,38 @@ td textarea{display:block;resize:none;overflow:hidden;line-height:1.3;padding:4p
 .bar button,.bar label{white-space:nowrap;padding:9px 12px;font-size:13px;flex:0 0 auto}
 .wrap{padding:12px 10px 24px 30px}
 }
+.tabs{display:flex;gap:4px;margin-right:auto}
+.tabs button{background:#3e4c59}.bar .tabs button.on{background:#fff;color:#1f2933;font-weight:bold}
+#stage2{margin:0 auto;position:relative}
+#leave{position:relative;width:794px;height:561px;background:#fff;padding:50px 84px 0;font-family:Montserrat,Arial,sans-serif;font-size:11px;color:#222}
+#leave .hd{position:relative;height:60px;display:flex;align-items:center;justify-content:center}
+#leave h2{margin:0;font-size:21px;font-weight:500;letter-spacing:.2px;white-space:nowrap}
+#leave .lg{position:absolute;right:0;top:-10px;width:120px;height:64px;display:flex;align-items:center;justify-content:flex-end;cursor:pointer}
+#leave .lg img{max-width:100%;max-height:100%;object-fit:contain;object-position:right center}
+#leave .lg span{font-size:10px;color:#999;border:1px dashed #bbb;padding:6px}
+#leave input{height:14px;line-height:1.3}
+.lr{display:flex;align-items:flex-end;min-height:17px;margin-top:3px}
+.two{display:grid;grid-template-columns:372px 1fr;column-gap:28px}
+.two>.lr{margin-top:3px}
+.l{white-space:nowrap}.l.w{min-width:118px}
+.ln{flex:1;margin-left:8px;border-bottom:1.2px dashed #333;padding-bottom:1px;min-width:0}
+.tl{display:flex;align-items:flex-start;margin-top:16px}
+.tl b{width:93px;padding-top:4px;font-weight:700}
+.tg{flex:1;display:grid;grid-template-columns:repeat(4,1fr);gap:10px 9px}
+.tb{height:22px;border:1px solid #444;border-radius:2px;display:flex;align-items:center;justify-content:center;font-size:10.5px;cursor:pointer;user-select:none;-webkit-user-select:none}
+.tb.on{background:#222;color:#fff;font-weight:600}
+.rm{margin-top:14px;font-size:10px;display:flex;align-items:flex-end}
+.rm b{white-space:nowrap}.rm span.t{white-space:pre}
+.sg{display:grid;grid-template-columns:193px 190px 1fr;margin-top:14px}
+.sg b{font-weight:700;display:block;margin-bottom:22px}
+.capturing .lg span{display:none}
 .copy{text-align:center;font-size:12px;color:#52606d;padding:0 12px 24px}
 .hint{text-align:center;font-size:12px;color:#52606d;margin-top:14px}
 </style>
 </head>
 <body>
 <div class="bar">
-  <b>Expenditure Top Sheet</b>
+  <div class="tabs"><button id="t1" class="on">Expenditure Top Sheet</button><button id="t2">Leave Form</button></div>
   <button id="addRow">+ Add row</button>
   <label>Logo upload<input type="file" id="logoFile" accept="image/*"></label>
   <button class="sec" id="namesBtn">Names</button>
@@ -115,7 +141,31 @@ td textarea{display:block;resize:none;overflow:hidden;line-height:1.3;padding:4p
 
   <div class="sign" id="sign"></div>
 </div></div>
-<div class="hint">Data is saved in your browser automatically. Fill in, then download PDF or Excel.</div>
+<div id="stage2" hidden><div id="leave">
+  <div class="hd"><h2>LEAVE APPLICATION FORM</h2><div class="lg" id="logoBox2" title="Click to upload logo"><img id="logoImg2" alt="" hidden><span id="logoPh2">Logo</span></div></div>
+  <div class="two">
+    <div class="lr"><span class="l">Name</span><span class="ln"><input id="lName" list="dl-names" autocomplete="off"></span></div>
+    <div class="lr"><span class="l">Date:</span><span class="ln"><input id="lDate" placeholder="dd/mm/yyyy"></span></div>
+    <div class="lr"><span class="l">Position:</span><span class="ln"><input id="lPos" list="dl-pos" autocomplete="off"></span></div>
+    <div class="lr"><span class="l">Program:</span><span class="ln"><input id="lProg"></span></div>
+  </div>
+  <div class="tl"><b>Type of Leave:</b><div class="tg" id="types"></div></div>
+  <div class="lr" style="margin-top:18px"><span class="l w">Cause of Leave</span><span class="ln"><input></span></div>
+  <div class="lr"><span class="l w">Address in Leave</span><span class="ln"><input></span></div>
+  <div class="two">
+    <div class="lr"><span class="l w">Emergency Contact</span><span class="ln"><input></span></div>
+    <div class="lr"><span class="l">Phone No:</span><span class="ln"><input inputmode="tel"></span></div>
+    <div class="lr"><span class="l w">Alternative Staff:</span><span class="ln"><input id="lAlt" list="dl-names" autocomplete="off"></span></div>
+    <div class="lr"><span class="l">Position:</span><span class="ln"><input id="lAltPos" list="dl-pos" autocomplete="off"></span></div>
+  </div>
+  <div class="rm"><b>Remarks of the Finance &amp; Admin Team:</b><span class="t"> No. of days due of the Applicant:</span><span class="ln"><input></span></div>
+  <div class="sg">
+    <div><b>Submitted by</b><div class="lr"><span class="l">Signature</span><span class="ln" style="margin-right:14px"><input></span></div><div class="lr"><span class="l">Date:</span><span class="ln" style="margin-right:14px"><input class="ld" placeholder="dd/mm/yyyy"></span></div></div>
+    <div><b>Checked by</b><div class="lr"><span class="l">Signature</span><span class="ln" style="margin-right:14px"><input></span></div><div class="lr"><span class="l">Date:</span><span class="ln" style="margin-right:14px"><input class="ld" placeholder="dd/mm/yyyy"></span></div></div>
+    <div><b>Approved by</b><div class="lr"><span class="l">Signature:</span><span class="ln"><input></span></div><div class="lr"><span class="l">Date:</span><span class="ln"><input class="ld" placeholder="dd/mm/yyyy"></span></div></div>
+  </div>
+</div></div>
+<div class="hint" id="hint">Data is saved in your browser automatically. Fill in, then download PDF or Excel.</div>
 </div>
 <div class="copy">© <span id="yr"></span> CLEAN &amp; Abu Naeem. All rights reserved.</div>
 
@@ -235,14 +285,14 @@ function bindPair(nameEl,posEl){
     const p=find(n);
     if(p){nameEl.value=p.name;if(p.position)posEl.value=p.position}
     else{people.push({name:n,position:posEl.value.trim()});savePeople()}
-    syncSub();save();
+    syncSub();save();saveLeave();
   });
   posEl.addEventListener('change',()=>{
     const n=nameEl.value.trim(),v=posEl.value.trim();if(!n||!v)return;
     const p=find(n);
     if(!p){people.push({name:n,position:v});savePeople()}
     else if(p.position!==v){p.position=v;savePeople()}
-    syncSub();save();
+    syncSub();save();saveLeave();
   });
 }
 bindPair($('name'),$('pos'));
@@ -259,6 +309,22 @@ $('mSave').onclick=()=>{
   savePeople();$('modal').classList.remove('on');
 };
 
+// ---- leave form ----
+const LK='leave_v1';
+['Annual Leave','Medical Leave','Wedding Leave','Time in Lieu','Maternal Leave','Paternal Leave','Study Leave','Nonpay Leave'].forEach(t=>{
+  const d=document.createElement('div');d.className='tb';d.textContent=t;
+  d.onclick=()=>{const on=d.classList.contains('on');document.querySelectorAll('.tb').forEach(x=>x.classList.remove('on'));if(!on)d.classList.add('on');saveLeave()};
+  $('types').appendChild(d);
+});
+dateInput($('lDate'));document.querySelectorAll('.ld').forEach(dateInput);
+bindPair($('lName'),$('lPos'));bindPair($('lAlt'),$('lAltPos'));
+function saveLeave(){try{localStorage.setItem(LK,JSON.stringify({v:[...$('leave').querySelectorAll('input')].map(e=>e.value),t:[...document.querySelectorAll('.tb')].findIndex(x=>x.classList.contains('on'))}))}catch(e){}}
+function loadLeave(){let q;try{q=JSON.parse(localStorage.getItem(LK))}catch(e){}if(!q)return;
+  [...$('leave').querySelectorAll('input')].forEach((e,i)=>{if(q.v[i]!=null)e.value=q.v[i]});
+  if(q.t>=0)document.querySelectorAll('.tb')[q.t].classList.add('on')}
+$('leave').addEventListener('input',saveLeave);
+loadLeave();
+
 // save / restore
 const fields=()=>[...$('sheet').querySelectorAll('input:not([type=file]),textarea')];
 function save(){try{localStorage.setItem(KEY,JSON.stringify({n:$('rows').children.length,v:fields().map(e=>e.value),logo:$('logoImg').src.startsWith('data:')?$('logoImg').src:''}))}catch(e){}}
@@ -270,11 +336,11 @@ function restore(){
   if(s.logo)setLogo(s.logo);
   document.querySelectorAll('.it').forEach(grow);
 }
-function setLogo(src){$('logoImg').src=src;$('logoImg').hidden=false;$('logoPh').hidden=true}
-$('logoBox').onclick=()=>$('logoFile').click();
+function setLogo(src){['','2'].forEach(k=>{$('logoImg'+k).src=src;$('logoImg'+k).hidden=false;$('logoPh'+k).hidden=true})}
+$('logoBox').onclick=$('logoBox2').onclick=()=>$('logoFile').click();
 $('logoFile').onchange=e=>{
   const f=e.target.files[0];if(!f)return;const r=new FileReader();
-  r.onload=()=>{setLogo(r.result);save()};r.readAsDataURL(f);
+  r.onload=()=>{setLogo(r.result);try{localStorage.setItem('clean_logo_v1',r.result)}catch(x){}save()};r.readAsDataURL(f);
 };
 // default logo: put logo.png next to index.html
 const probe=new Image();probe.onload=()=>{if($('logoImg').hidden)setLogo('logo.png')};probe.src='logo.png';
@@ -283,21 +349,37 @@ restore();syncSub();calc();document.querySelectorAll('.it').forEach(grow);
 $('yr').textContent=new Date().getFullYear();
 // fit sheet to screen width (mobile / tablet) without changing the real sheet size
 function fit(){
-  const w=document.querySelector('.wrap'),c=getComputedStyle(w),sh=$('sheet'),st=$('stage');
+  const w=document.querySelector('.wrap'),c=getComputedStyle(w);
   const k=Math.min(1,(w.clientWidth-parseFloat(c.paddingLeft)-parseFloat(c.paddingRight))/794);
-  sh.style.setProperty('--s',k);sh.style.transformOrigin='0 0';sh.style.transform=k<1?`scale(${k})`:'none';
-  st.style.width=794*k+'px';st.style.height=sh.offsetHeight*k+'px';
+  [[$('sheet'),$('stage')],[$('leave'),$('stage2')]].forEach(([sh,st])=>{
+    sh.style.setProperty('--s',k);sh.style.transformOrigin='0 0';sh.style.transform=k<1?`scale(${k})`:'none';
+    st.style.width=794*k+'px';st.style.height=sh.offsetHeight*k+'px';
+  });
 }
-new ResizeObserver(fit).observe($('sheet'));addEventListener('resize',fit);fit();
+new ResizeObserver(fit).observe($('sheet'));new ResizeObserver(fit).observe($('leave'));addEventListener('resize',fit);
+
+// ---- tabs ----
+let tab=1;
+function show(n){
+  tab=n;$('stage').hidden=n!==1;$('stage2').hidden=n!==2;
+  $('t1').classList.toggle('on',n===1);$('t2').classList.toggle('on',n===2);
+  $('addRow').hidden=$('xlsBtn').hidden=n!==1;
+  $('hint').textContent=n===1?'Data is saved in your browser automatically. Fill in, then download PDF or Excel.':'Data is saved in your browser automatically. Fill in, select leave type, then download PDF.';
+  try{localStorage.setItem('clean_tab',n)}catch(e){}
+  fit();
+}
+$('t1').onclick=()=>show(1);$('t2').onclick=()=>show(2);
+try{const lg=localStorage.getItem('clean_logo_v1');if(lg)setLogo(lg)}catch(e){}
+show(+localStorage.getItem('clean_tab')===2?2:1);
 $('sheet').addEventListener('input',()=>{syncSub();calc();save()});
 $('addRow').onclick=()=>{addRow();calc();save()};
-$('reset').onclick=()=>{if(confirm('Clear all data?')){localStorage.removeItem(KEY);location.reload()}};
+$('reset').onclick=()=>{if(confirm('Clear all data of this tab?')){localStorage.removeItem(tab===1?KEY:LK);location.reload()}};
 
 const fname=()=>'Expenditure_TopSheet_'+(($('name').value||'Staff').trim().replace(/\s+/g,'_'))+'_'+($('date').value||'').replace(/\//g,'-');
 function dl(blob,name){const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),2000)}
 
 // PDF (multi-page, page breaks only between rows, text rendered as real values)
-$('pdfBtn').onclick=async()=>{
+async function pdfSheet(){
   const sh=$('sheet'),st=$('stage'),wr=document.querySelector('.wrap'),btn=$('pdfBtn');
   const keep=[sh.style.cssText,st.style.cssText,wr.style.overflow,window.scrollY];
   btn.disabled=true;btn.textContent='Creating PDF…';
@@ -344,7 +426,33 @@ $('pdfBtn').onclick=async()=>{
   sh.classList.remove('capturing');
   sh.style.cssText=keep[0];st.style.cssText=keep[1];wr.style.overflow=keep[2];window.scrollTo(0,keep[3]);
   btn.disabled=false;btn.textContent='Download PDF';fit();
-};
+}
+async function pdfLeave(){
+  const sh=$('leave'),st=$('stage2'),wr=document.querySelector('.wrap'),btn=$('pdfBtn');
+  const keep=[sh.style.cssText,st.style.cssText,wr.style.overflow,window.scrollY];
+  btn.disabled=true;btn.textContent='Creating PDF…';
+  sh.classList.add('capturing');
+  sh.style.transform='none';st.style.cssText='width:794px;height:561px;margin:0';wr.style.overflow='visible';window.scrollTo(0,0);
+  try{
+    if(document.fonts)await document.fonts.ready;
+    const c=await html2canvas(sh,{scale:3,windowWidth:1000,scrollX:0,scrollY:0,backgroundColor:'#fff',onclone:doc=>{
+      const o=[...sh.querySelectorAll('input')],n=[...doc.getElementById('leave').querySelectorAll('input')];
+      n.forEach((el,i)=>{
+        const stl=doc.defaultView.getComputedStyle(el),d=doc.createElement('div');
+        d.textContent=o[i].value;
+        Object.assign(d.style,{fontFamily:stl.fontFamily,fontSize:stl.fontSize,width:stl.width,height:'14px',lineHeight:'14px',whiteSpace:'pre',overflow:'hidden'});
+        el.replaceWith(d);
+      });
+    }});
+    const {jsPDF}=window.jspdf,pdf=new jsPDF('l','mm','a4');
+    pdf.addImage(c.toDataURL('image/jpeg',.95),'JPEG',0,0,297,210);
+    pdf.save('Leave_Form_'+(($('lName').value||'Staff').trim().replace(/\s+/g,'_'))+'_'+($('lDate').value||'').replace(/\//g,'-')+'.pdf');
+  }catch(e){alert('PDF error: '+e.message)}
+  sh.classList.remove('capturing');
+  sh.style.cssText=keep[0];st.style.cssText=keep[1];wr.style.overflow=keep[2];window.scrollTo(0,keep[3]);
+  btn.disabled=false;btn.textContent='Download PDF';fit();
+}
+$('pdfBtn').onclick=()=>tab===1?pdfSheet():pdfLeave();
 
 // Excel
 $('xlsBtn').onclick=async()=>{
