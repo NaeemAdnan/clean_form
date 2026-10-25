@@ -678,8 +678,8 @@ async function pdfLeave(){
         el.replaceWith(d);
       });
     }});
-    const {jsPDF}=window.jspdf,pdf=new jsPDF('l','mm','a4');
-    pdf.addImage(c.toDataURL('image/jpeg',.95),'JPEG',0,0,297,210);
+    const {jsPDF}=window.jspdf,pdf=new jsPDF('p','mm','a4');
+    pdf.addImage(c.toDataURL('image/jpeg',.95),'JPEG',0,0,210,148.5);
     pdf.save('Leave_Form_'+(($('lName').value||'Staff').trim().replace(/\s+/g,'_'))+'_'+($('lDate').value||'').replace(/\//g,'-')+'.pdf');
   }catch(e){alert('PDF error: '+e.message)}
   sh.classList.remove('capturing');
