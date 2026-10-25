@@ -7,7 +7,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.4.0/exceljs.min.js"></script>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;600;700&display=swap">
 <style>
 *{box-sizing:border-box}
 body{margin:0;background:#e9ecef;font-family:Arial,Helvetica,sans-serif;color:#000}
@@ -111,13 +111,46 @@ td textarea{display:block;resize:none;overflow:hidden;line-height:1.3;padding:4p
 #conv .sl{border-bottom:1.2px solid #111;height:18px;width:125px}
 #conv .sg b{display:block;font-size:17px;margin-top:3px;line-height:1.2}
 #conv .sg .cr{height:22px;font-size:14.5px}#conv .sg .cln{flex:none;width:92px}
+#stage4{margin:0 auto;position:relative}
+#req{position:relative;width:794px;min-height:1123px;background:#fff;padding:138px 30px 40px 26px;font-family:'Open Sans',Calibri,Carlito,Arial,sans-serif;font-size:13px;color:#111}
+#req input{height:18px;line-height:1.3}
+#req .lg4{position:absolute;left:27px;top:44px;width:124px;height:66px;display:flex;align-items:center;cursor:pointer}
+#req .lg4 img{max-width:100%;max-height:100%;object-fit:contain;object-position:left center}
+#req .lg4 span{font:10px Arial;color:#999;border:1px dashed #bbb;padding:6px}
+#req .addr{position:absolute;right:30px;top:65px;width:540px}
+#req .addr input{text-align:right;font-size:11.5px;font-weight:600}
+#req h4{position:absolute;left:0;right:0;top:98px;margin:0;text-align:center;font-size:23px;font-weight:700;letter-spacing:.2px}
+#req .rr{display:flex;justify-content:flex-end;align-items:center;height:24px;font-weight:700;font-size:13.5px;gap:5px}
+#req .rr input{width:92px;height:20px}
+#req .r4{display:flex;justify-content:space-between;align-items:center;height:24px;font-weight:700;font-size:13.5px;margin-top:11px}
+#req .g{display:flex;align-items:center;gap:5px;font-weight:700;font-size:13.5px}
+#req table{border:0;width:738px;table-layout:fixed;border-collapse:collapse;margin-top:17px}
+#req th{border:1px solid #111;height:22px;font-size:13px;font-weight:700;padding:0 4px;text-align:center}
+#req th.l{text-align:left}
+#req td{border:1px solid #111;height:20px;padding:0 4px;position:relative;font-size:13px;vertical-align:middle}
+#req td textarea{display:block;resize:none;overflow:hidden;line-height:1.3;padding:1px 0;height:17px}
+#req td.a input{text-align:right}
+#req td.sn span{display:block}
+#req tfoot td{height:23px;font-weight:700}
+#req tfoot td.nb{border:0;text-align:right;padding-right:3px}
+#req .wd{display:flex;align-items:center;margin-top:15px;font-weight:700;font-size:15px;height:22px;gap:6px}
+#req .wd span{white-space:nowrap}#req .wd input{flex:1;height:22px}
+#req .sg{display:grid;grid-template-columns:252px 303px 1fr;margin-top:40px}
+#req .sc{display:flex;flex-direction:column;height:131px}
+#req .sc>b{font-size:14px;font-weight:700;line-height:1.2}
+#req .sc .bt{margin-top:auto}
+#req .sc .bt input{font-size:14px}
+#req .sc .fx{font-size:14px;line-height:18px;height:18px}
+#req .sc .ce{font-size:12px;line-height:16px;height:16px}
+#req .sc .dt{display:flex;align-items:center;font-size:12px;height:16px;gap:4px}
+#req .sc .dt input{width:95px;height:16px;font-size:12px}
 .copy{text-align:center;font-size:12px;color:#52606d;padding:0 12px 24px}
 .hint{text-align:center;font-size:12px;color:#52606d;margin-top:14px}
 </style>
 </head>
 <body>
 <div class="bar">
-  <div class="tabs"><button id="t1" class="on">Expenditure Top Sheet</button><button id="t2">Leave Form</button><button id="t3">Local Conveyance</button></div>
+  <div class="tabs"><button id="t1" class="on">Expenditure Top Sheet</button><button id="t2">Leave Form</button><button id="t3">Local Conveyance</button><button id="t4">Money Requisition</button></div>
   <button id="addRow">+ Add row</button>
   <label>Logo upload<input type="file" id="logoFile" accept="image/*"></label>
   <button class="sec" id="namesBtn">Names</button>
@@ -210,6 +243,28 @@ td textarea{display:block;resize:none;overflow:hidden;line-height:1.3;padding:4p
   </div>
 </div></div>
 <datalist id="dl-mode"><option value="Rickshaw"><option value="CNG"><option value="Bus"><option value="Bike"><option value="Car"><option value="Train"><option value="Launch"><option value="Walking"></datalist>
+<div id="stage4" hidden><div id="req">
+  <div class="lg4" id="logoBox4" title="Click to upload logo"><img id="logoImg4" alt="" hidden><span id="logoPh4">Logo</span></div>
+  <div class="addr"><input value="9A Mallick Bari Road, Boyra-Rayermahal, Khulna-9000, Bangladesh"></div>
+  <h4>MONEY REQUISITION</h4>
+  <div class="rr"><span>Submission Date:</span><input class="rd" placeholder="dd/mm/yyyy"></div>
+  <div class="rr"><span>Needed Date:</span><input class="rd" placeholder="dd/mm/yyyy"></div>
+  <div class="rr"><span>Adjustment Date:</span><input class="rd" placeholder="dd/mm/yyyy"></div>
+  <div class="r4"><div class="g"><span>Name of Staff:</span><input id="rName" list="dl-names" autocomplete="off" style="width:240px"></div><div class="g"><span>Position:</span><input id="rPos" list="dl-pos" autocomplete="off" style="width:215px"></div></div>
+  <div class="rr" style="justify-content:flex-start;margin-top:0"><span>Program:</span><input style="width:420px" id="rProg"></div>
+  <table>
+    <colgroup><col style="width:42px"><col style="width:103px"><col style="width:104px"><col style="width:369px"><col style="width:122px"></colgroup>
+    <thead><tr><th class="l">SL#</th><th>Project</th><th>CODE</th><th>DESCRIPTION</th><th>AMOUNT</th></tr></thead>
+    <tbody id="rrows"></tbody>
+    <tfoot><tr><td class="nb" colspan="4">TOTAL AMOUNT:</td><td class="a" id="rTot" style="text-align:right"></td></tr></tfoot>
+  </table>
+  <div class="wd"><span>Total Amount (in words):</span><input id="rWords"></div>
+  <div class="sg">
+    <div class="sc"><b>Prepared by</b><div class="bt"><input id="rPrep" list="dl-pos" autocomplete="off" style="font-size:14px"><div class="dt"><span>Date:</span><input class="rd" placeholder="dd/mm/yyyy"></div></div></div>
+    <div class="sc"><b>Checked by</b><div class="bt"><input list="dl-pos" autocomplete="off" value="Finance and Admin Officer" style="font-size:14px"><div class="dt"><span>Date:</span><input class="rd" placeholder="dd/mm/yyyy"></div></div></div>
+    <div class="sc"><b>Approved by</b><div class="bt"><div class="fx">Hasan Mehedi</div><div class="ce">Chief Executive</div><div class="dt"><span>Date:</span><input class="rd" placeholder="dd/mm/yyyy"></div></div></div>
+  </div>
+</div></div>
 <div class="hint" id="hint">Data is saved in your browser automatically. Fill in, then download PDF or Excel.</div>
 </div>
 <div class="copy">© <span id="yr"></span> CLEAN &amp; Abu Naeem. All rights reserved.</div>
@@ -330,14 +385,14 @@ function bindPair(nameEl,posEl){
     const p=find(n);
     if(p){nameEl.value=p.name;if(p.position)posEl.value=p.position}
     else{people.push({name:n,position:posEl.value.trim()});savePeople()}
-    syncSub();save();saveLeave();saveConv();
+    posEl.dispatchEvent(new Event('input',{bubbles:true}));syncSub();save();saveLeave();saveConv();saveReq();
   });
   posEl.addEventListener('change',()=>{
     const n=nameEl.value.trim(),v=posEl.value.trim();if(!n||!v)return;
     const p=find(n);
     if(!p){people.push({name:n,position:v});savePeople()}
     else if(p.position!==v){p.position=v;savePeople()}
-    syncSub();save();saveLeave();saveConv();
+    posEl.dispatchEvent(new Event('input',{bubbles:true}));syncSub();save();saveLeave();saveConv();saveReq();
   });
 }
 bindPair($('name'),$('pos'));
@@ -395,6 +450,115 @@ loadConv();
 $('conv').addEventListener('input',()=>{ccalc();saveConv()});
 $('conv').addEventListener('focusout',saveConv);
 
+// ---- money requisition ----
+const RK='req_v1';let lastT=0;
+function toWords(n){
+  const o=['','One','Two','Three','Four','Five','Six','Seven','Eight','Nine','Ten','Eleven','Twelve','Thirteen','Fourteen','Fifteen','Sixteen','Seventeen','Eighteen','Nineteen'],
+        t=['','','Twenty','Thirty','Forty','Fifty','Sixty','Seventy','Eighty','Ninety'];
+  const w2=x=>x<20?o[x]:t[Math.floor(x/10)]+(x%10?'-'+o[x%10]:'');
+  const w3=x=>x>=100?o[Math.floor(x/100)]+' Hundred'+(x%100?' and '+w2(x%100):''):w2(x);
+  const taka=Math.floor(n),paisa=Math.round((n-taka)*100);let r=taka;const parts=[];
+  const cr=Math.floor(r/1e7);r%=1e7;const lk=Math.floor(r/1e5);r%=1e5;const th=Math.floor(r/1e3);r%=1e3;
+  if(cr)parts.push(w3(cr)+' Crore');if(lk)parts.push(w2(lk)+' Lakh');if(th)parts.push(w2(th)+' Thousand');
+  let out=parts.join(' ');
+  if(r)out+=(out?' and ':'')+w3(r);
+  if(!out&&!paisa)return '';
+  if(!out)out='Zero';
+  if(paisa)out+=' and '+w2(paisa)+' Paisa';
+  return 'BDT '+out+' Only';
+}
+function renum(){document.querySelectorAll('#rrows tr').forEach((tr,i)=>tr.querySelector('.sn span').textContent=i+1)}
+function addRRow(){
+  const tr=document.createElement('tr');
+  tr.innerHTML='<td class="sn"><button class="del" title="Remove row">×</button><span></span></td><td><input></td><td><input></td><td><textarea rows="1"></textarea></td><td class="a"><input class="ra"></td>';
+  tr.querySelector('.del').onclick=()=>{if($('rrows').children.length>1){tr.remove();renum();rcalc();saveReq()}};
+  numInput(tr.querySelector('.ra'));
+  tr.querySelector('textarea').addEventListener('input',e=>grow(e.target));
+  $('rrows').appendChild(tr);renum();return tr;
+}
+function rcalc(init){
+  let t=0;document.querySelectorAll('#req .ra').forEach(i=>t+=num(i.value));
+  $('rTot').textContent=t?fmt(t):'';
+  if(!init&&t!==lastT)$('rWords').value=toWords(t);
+  lastT=t;
+}
+const rfields=()=>[...$('req').querySelectorAll('input,textarea')];
+function saveReq(){try{localStorage.setItem(RK,JSON.stringify({n:$('rrows').children.length,v:rfields().map(e=>e.value)}))}catch(e){}}
+function loadReq(){
+  let q;try{q=JSON.parse(localStorage.getItem(RK))}catch(e){}
+  for(let i=0;i<(q?q.n:11);i++)addRRow();
+  if(q)rfields().forEach((e,i)=>{if(q.v[i]!=null)e.value=q.v[i]});
+  document.querySelectorAll('#rrows textarea').forEach(grow);rcalc(true);
+}
+document.querySelectorAll('#req .rd').forEach(dateInput);
+bindPair($('rName'),$('rPos'));
+$('rPos').addEventListener('input',()=>{$('rPrep').value=$('rPos').value});
+loadReq();
+$('req').addEventListener('input',()=>{rcalc();saveReq()});
+$('req').addEventListener('focusout',saveReq);
+
+async function pdfReq(){
+  const sh=$('req'),st=$('stage4'),wr=document.querySelector('.wrap'),btn=$('pdfBtn');
+  const keep=[sh.style.cssText,st.style.cssText,wr.style.overflow,window.scrollY];
+  btn.disabled=true;btn.textContent='Creating PDF…';
+  sh.classList.add('capturing');
+  sh.style.transform='none';st.style.cssText='width:794px;height:auto;margin:0';wr.style.overflow='visible';window.scrollTo(0,0);
+  try{
+    if(document.fonts)await document.fonts.ready;
+    const sc=Math.max(1,Math.min(2.5,Math.floor(1.3e7/(794*sh.offsetHeight)*10)/10));
+    const c=await html2canvas(sh,{scale:sc,windowWidth:1000,scrollX:0,scrollY:0,backgroundColor:'#fff',onclone:doc=>{
+      const o=[...sh.querySelectorAll('input,textarea')],n=[...doc.getElementById('req').querySelectorAll('input,textarea')];
+      n.forEach((el,i)=>{
+        const stl=doc.defaultView.getComputedStyle(el),d=doc.createElement('div');
+        d.textContent=o[i].value;
+        const ta=el.tagName==='TEXTAREA';
+        Object.assign(d.style,{fontFamily:stl.fontFamily,fontSize:stl.fontSize,fontWeight:stl.fontWeight,textAlign:stl.textAlign,width:stl.width,lineHeight:ta?'1.3':stl.height,minHeight:ta?'17px':stl.height,whiteSpace:ta?'pre-wrap':'pre',wordBreak:'break-word',overflow:'hidden'});
+        el.replaceWith(d);
+      });
+    }});
+    const {jsPDF}=window.jspdf,pdf=new jsPDF('p','mm','a4');
+    const h0=c.height/sc,k=Math.min(210/794,297/h0),w=794*k,h=h0*k;
+    pdf.addImage(c.toDataURL('image/jpeg',.95),'JPEG',(210-w)/2,0,w,h);
+    pdf.save('Money_Requisition_'+(($('rName').value||'Staff').trim().replace(/\s+/g,'_'))+'_'+($('req').querySelector('.rd').value||'').replace(/\//g,'-')+'.pdf');
+  }catch(e){alert('PDF error: '+e.message)}
+  sh.classList.remove('capturing');
+  sh.style.cssText=keep[0];st.style.cssText=keep[1];wr.style.overflow=keep[2];window.scrollTo(0,keep[3]);
+  btn.disabled=false;btn.textContent='Download PDF';fit();
+}
+async function xlsReq(){
+  const wb=new ExcelJS.Workbook(),ws=wb.addWorksheet('Money Requisition',{pageSetup:{paperSize:9,fitToPage:true,fitToWidth:1,fitToHeight:0}});
+  ws.columns=[{width:7},{width:18},{width:16},{width:50},{width:18}];
+  const thin={style:'thin'},bd={top:thin,left:thin,bottom:thin,right:thin};
+  const set=(a,v,o={})=>{const c=ws.getCell(a);c.value=v;c.font={name:'Calibri',size:o.size||11,bold:!!o.bold};c.alignment={horizontal:o.al||'left',vertical:'middle',wrapText:true};if(o.nf)c.numFmt=o.nf;if(o.b)c.border=bd;return c};
+  const top=[...$('req').querySelectorAll('.addr input,.rr input,.r4 input')].map(i=>i.value);
+  const dts=[...$('req').querySelectorAll('.rr input.rd')].map(i=>i.value);
+  ws.mergeCells('A1:E1');set('A1','MONEY REQUISITION',{size:16,bold:true,al:'center'});ws.getRow(1).height=28;
+  ws.mergeCells('A2:E2');set('A2',$('req').querySelector('.addr input').value,{al:'center',size:10});
+  ws.mergeCells('A3:C3');set('A3','Name of Staff: '+$('rName').value,{bold:true});ws.mergeCells('D3:E3');set('D3','Submission Date: '+dts[0],{bold:true,al:'right'});
+  ws.mergeCells('A4:C4');set('A4','Position: '+$('rPos').value,{bold:true});ws.mergeCells('D4:E4');set('D4','Needed Date: '+dts[1],{bold:true,al:'right'});
+  ws.mergeCells('A5:C5');set('A5','Program: '+$('rProg').value,{bold:true});ws.mergeCells('D5:E5');set('D5','Adjustment Date: '+dts[2],{bold:true,al:'right'});
+  ['SL#','Project','CODE','DESCRIPTION','AMOUNT'].forEach((h,i)=>set(String.fromCharCode(65+i)+'7',h,{bold:true,al:'center',b:1}));
+  const nf='#,##0.00;-#,##0.00;"-"';let r=8;
+  document.querySelectorAll('#rrows tr').forEach((tr,i)=>{
+    const x=[...tr.querySelectorAll('input,textarea')];
+    set('A'+r,i+1,{b:1,al:'center'});set('B'+r,x[0].value,{b:1});set('C'+r,x[1].value,{b:1});set('D'+r,x[2].value,{b:1});
+    set('E'+r,num(x[3].value)||null,{b:1,nf,al:'right'});
+    ws.getRow(r).height=Math.max(20,x[2].value.split('\n').reduce((a,l)=>a+Math.max(1,Math.ceil(l.length/55)),0)*15+5);r++;
+  });
+  ws.mergeCells(`A${r}:D${r}`);set('A'+r,'TOTAL AMOUNT:',{bold:true,al:'right'});
+  set('E'+r,{formula:`SUM(E8:E${r-1})`},{bold:true,b:1,nf,al:'right'});r+=2;
+  ws.mergeCells(`A${r}:E${r}`);set('A'+r,'Total Amount (in words): '+$('rWords').value,{bold:true});r+=3;
+  const sc=[...$('req').querySelectorAll('.sg > .sc')],cols=['A','C','E'];
+  sc.forEach((d,i)=>{
+    const L=cols[i],ins=d.querySelectorAll('input');
+    set(L+r,d.querySelector('b').textContent,{bold:true});
+    if(i<2){set(L+(r+2),ins[0].value);set(L+(r+3),'Date: '+ins[1].value)}
+    else{set(L+(r+1),'Hasan Mehedi');set(L+(r+2),'Chief Executive');set(L+(r+3),'Date: '+ins[0].value)}
+  });
+  const buf=await wb.xlsx.writeBuffer();
+  dl(new Blob([buf],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'}),'Money_Requisition_'+(($('rName').value||'Staff').trim().replace(/\s+/g,'_'))+'_'+(dts[0]||'').replace(/\//g,'-')+'.xlsx');
+}
+
 // save / restore
 const fields=()=>[...$('sheet').querySelectorAll('input:not([type=file]),textarea')];
 function save(){try{localStorage.setItem(KEY,JSON.stringify({n:$('rows').children.length,v:fields().map(e=>e.value),logo:$('logoImg').src.startsWith('data:')?$('logoImg').src:''}))}catch(e){}}
@@ -406,8 +570,8 @@ function restore(){
   if(s.logo)setLogo(s.logo);
   document.querySelectorAll('.it').forEach(grow);
 }
-function setLogo(src){['','2','3'].forEach(k=>{$('logoImg'+k).src=src;$('logoImg'+k).hidden=false;$('logoPh'+k).hidden=true})}
-$('logoBox').onclick=$('logoBox2').onclick=$('logoBox3').onclick=()=>$('logoFile').click();
+function setLogo(src){['','2','3','4'].forEach(k=>{$('logoImg'+k).src=src;$('logoImg'+k).hidden=false;$('logoPh'+k).hidden=true})}
+$('logoBox').onclick=$('logoBox2').onclick=$('logoBox3').onclick=$('logoBox4').onclick=()=>$('logoFile').click();
 $('logoFile').onchange=e=>{
   const f=e.target.files[0];if(!f)return;const r=new FileReader();
   r.onload=()=>{setLogo(r.result);try{localStorage.setItem('clean_logo_v1',r.result)}catch(x){}save()};r.readAsDataURL(f);
@@ -421,29 +585,29 @@ $('yr').textContent=new Date().getFullYear();
 function fit(){
   const w=document.querySelector('.wrap'),c=getComputedStyle(w);
   const k=Math.min(1,(w.clientWidth-parseFloat(c.paddingLeft)-parseFloat(c.paddingRight))/794);
-  [[$('sheet'),$('stage')],[$('leave'),$('stage2')],[$('conv'),$('stage3')]].forEach(([sh,st])=>{
+  [[$('sheet'),$('stage')],[$('leave'),$('stage2')],[$('conv'),$('stage3')],[$('req'),$('stage4')]].forEach(([sh,st])=>{
     sh.style.setProperty('--s',k);sh.style.transformOrigin='0 0';sh.style.transform=k<1?`scale(${k})`:'none';
     st.style.width=794*k+'px';st.style.height=sh.offsetHeight*k+'px';
   });
 }
-new ResizeObserver(fit).observe($('sheet'));new ResizeObserver(fit).observe($('leave'));new ResizeObserver(fit).observe($('conv'));addEventListener('resize',fit);
+new ResizeObserver(fit).observe($('sheet'));new ResizeObserver(fit).observe($('leave'));new ResizeObserver(fit).observe($('conv'));new ResizeObserver(fit).observe($('req'));addEventListener('resize',fit);
 
 // ---- tabs ----
 let tab=1;
-const HINTS={1:'Data is saved in your browser automatically. Fill in, then download PDF or Excel.',2:'Data is saved in your browser automatically. Fill in, select leave type, then download PDF.',3:'Data is saved in your browser automatically. Add rows as needed, then download PDF or Excel.'};
+const HINTS={1:'Data is saved in your browser automatically. Fill in, then download PDF or Excel.',2:'Data is saved in your browser automatically. Fill in, select leave type, then download PDF.',3:'Data is saved in your browser automatically. Add rows as needed, then download PDF or Excel.',4:'Data is saved in your browser automatically. Approved by is fixed. Total in words fills automatically (you can edit it).'};
 function show(n){
-  tab=n;[1,2,3].forEach(i=>{$('stage'+(i===1?'':i)).hidden=n!==i;$('t'+i).classList.toggle('on',n===i)});
+  tab=n;[1,2,3,4].forEach(i=>{$('stage'+(i===1?'':i)).hidden=n!==i;$('t'+i).classList.toggle('on',n===i)});
   $('addRow').hidden=n===2;$('xlsBtn').hidden=n===2;
   $('hint').textContent=HINTS[n];
   try{localStorage.setItem('clean_tab',n)}catch(e){}
   fit();
 }
-$('t1').onclick=()=>show(1);$('t2').onclick=()=>show(2);$('t3').onclick=()=>show(3);
+$('t1').onclick=()=>show(1);$('t2').onclick=()=>show(2);$('t3').onclick=()=>show(3);$('t4').onclick=()=>show(4);
 try{const lg=localStorage.getItem('clean_logo_v1');if(lg)setLogo(lg)}catch(e){}
-{const t=+localStorage.getItem('clean_tab');show([1,2,3].includes(t)?t:1)}
+{const t=+localStorage.getItem('clean_tab');show([1,2,3,4].includes(t)?t:1)}
 $('sheet').addEventListener('input',()=>{syncSub();calc();save()});
-$('addRow').onclick=()=>{if(tab===3){addCRow();ccalc();saveConv()}else{addRow();calc();save()}};
-$('reset').onclick=()=>{if(confirm('Clear all data of this tab?')){localStorage.removeItem(tab===1?KEY:tab===2?LK:CK);location.reload()}};
+$('addRow').onclick=()=>{if(tab===3){addCRow();ccalc();saveConv()}else if(tab===4){addRRow();rcalc();saveReq()}else{addRow();calc();save()}};
+$('reset').onclick=()=>{if(confirm('Clear all data of this tab?')){localStorage.removeItem(tab===1?KEY:tab===2?LK:tab===3?CK:RK);location.reload()}};
 
 const fname=()=>'Expenditure_TopSheet_'+(($('name').value||'Staff').trim().replace(/\s+/g,'_'))+'_'+($('date').value||'').replace(/\//g,'-');
 function dl(blob,name){const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),2000)}
@@ -577,7 +741,7 @@ async function xlsConv(){
   const buf=await wb.xlsx.writeBuffer();
   dl(new Blob([buf],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'}),'Local_Conveyance_'+(($('cName').value||'Staff').trim().replace(/\s+/g,'_'))+'_'+($('cSub').value||'').replace(/\//g,'-')+'.xlsx');
 }
-$('pdfBtn').onclick=()=>tab===1?pdfSheet():tab===2?pdfLeave():pdfConv();
+$('pdfBtn').onclick=()=>tab===1?pdfSheet():tab===2?pdfLeave():tab===3?pdfConv():pdfReq();
 
 // Excel
 async function xlsSheet(){
@@ -626,7 +790,7 @@ async function xlsSheet(){
   const buf=await wb.xlsx.writeBuffer();
   dl(new Blob([buf],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'}),fname()+'.xlsx');
 }
-$('xlsBtn').onclick=()=>tab===3?xlsConv():xlsSheet();
+$('xlsBtn').onclick=()=>tab===4?xlsReq():tab===3?xlsConv():xlsSheet();
 </script>
 </body>
 </html>
