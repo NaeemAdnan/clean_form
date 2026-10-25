@@ -88,13 +88,36 @@ td textarea{display:block;resize:none;overflow:hidden;line-height:1.3;padding:4p
 .sg{display:grid;grid-template-columns:193px 190px 1fr;margin-top:14px}
 .sg b{font-weight:700;display:block;margin-bottom:22px}
 .capturing .lg span{display:none}
+#stage3{margin:0 auto;position:relative}
+#conv{position:relative;width:794px;min-height:574px;background:#fff;padding:32px 72px 30px 70px;font-family:'Times New Roman',Times,'Liberation Serif',serif;font-size:14.5px;color:#111}
+#conv input{height:18px;line-height:1.2}
+#conv .chd{position:relative;height:46px;display:flex;align-items:center;justify-content:center}
+#conv h3{margin:0;font:700 20px 'Arial Narrow','Liberation Sans Narrow',Arial,sans-serif;font-stretch:condensed;white-space:nowrap}
+#conv .lg3{position:absolute;left:0;top:-4px;width:116px;height:58px;display:flex;align-items:center;cursor:pointer}
+#conv .lg3 img{max-width:100%;max-height:100%;object-fit:contain;object-position:left center}
+#conv .lg3 span{font:10px Arial;color:#999;border:1px dashed #bbb;padding:6px}
+#conv .sub{display:flex;justify-content:flex-end;align-items:flex-end;font-size:12.5px;margin-top:-2px;height:18px}
+#conv .cln{flex:1;border-bottom:1.3px solid #111;margin-left:6px;min-width:0}
+#conv .cr{display:flex;align-items:flex-end;height:20px}
+#conv .c2{display:grid;grid-template-columns:379px 1fr;column-gap:38px}
+#conv .c2 .cr{margin-top:13px}#conv .c2 .cr:nth-child(-n+2){margin-top:8px}
+#conv table{border:0;width:652px;table-layout:fixed;border-collapse:collapse;margin-top:21px}
+#conv th{border:1.2px solid #111;height:24px;font-size:14px;font-weight:700;text-align:center;padding:0}
+#conv td{border:1.2px solid #111;height:30px;padding:0 4px;position:relative;font-size:12px}
+#conv td input{height:24px}#conv td.a input{text-align:right}
+#conv tfoot td{height:20px;font-weight:700}
+#conv tfoot td.nb{border:0;text-align:right;padding-right:11px;font-size:14px}
+#conv .sg{display:grid;grid-template-columns:264px 264px 124px;margin-top:40px}
+#conv .sl{border-bottom:1.2px solid #111;height:18px;width:125px}
+#conv .sg b{display:block;font-size:17px;margin-top:3px;line-height:1.2}
+#conv .sg .cr{height:22px;font-size:14.5px}#conv .sg .cln{flex:none;width:92px}
 .copy{text-align:center;font-size:12px;color:#52606d;padding:0 12px 24px}
 .hint{text-align:center;font-size:12px;color:#52606d;margin-top:14px}
 </style>
 </head>
 <body>
 <div class="bar">
-  <div class="tabs"><button id="t1" class="on">Expenditure Top Sheet</button><button id="t2">Leave Form</button></div>
+  <div class="tabs"><button id="t1" class="on">Expenditure Top Sheet</button><button id="t2">Leave Form</button><button id="t3">Local Conveyance</button></div>
   <button id="addRow">+ Add row</button>
   <label>Logo upload<input type="file" id="logoFile" accept="image/*"></label>
   <button class="sec" id="namesBtn">Names</button>
@@ -165,6 +188,28 @@ td textarea{display:block;resize:none;overflow:hidden;line-height:1.3;padding:4p
     <div><b>Approved by</b><div class="lr"><span class="l">Signature:</span><span class="ln"><input></span></div><div class="lr"><span class="l">Date:</span><span class="ln"><input class="ld" placeholder="dd/mm/yyyy"></span></div></div>
   </div>
 </div></div>
+<div id="stage3" hidden><div id="conv">
+  <div class="chd"><div class="lg3" id="logoBox3" title="Click to upload logo"><img id="logoImg3" alt="" hidden><span id="logoPh3">Logo</span></div><h3>LOCAL CONVEYANCE SHEET</h3></div>
+  <div class="sub"><span>Submission Date:</span><span class="cln" style="flex:none;width:84px"><input class="cd" placeholder="dd/mm/yyyy" id="cSub"></span></div>
+  <div class="c2">
+    <div class="cr"><span>Name of staff:</span><span class="cln"><input id="cName" list="dl-names" autocomplete="off"></span></div>
+    <div class="cr"><span>Position:</span><span class="cln"><input id="cPos" list="dl-pos" autocomplete="off"></span></div>
+    <div class="cr"><span>Project:</span><span class="cln"><input></span></div>
+    <div class="cr"><span>Programme:</span><span class="cln"><input></span></div>
+  </div>
+  <table>
+    <colgroup><col style="width:79px"><col style="width:102px"><col style="width:102px"><col style="width:102px"><col style="width:78px"><col style="width:97px"><col style="width:93px"></colgroup>
+    <thead><tr><th>Date</th><th>From</th><th>to/via</th><th>To</th><th>Mode</th><th>Amount</th><th>Remarks</th></tr></thead>
+    <tbody id="crows"></tbody>
+    <tfoot><tr><td class="nb" colspan="5">Total:</td><td class="a" id="cTot" style="text-align:right"></td><td class="nb"></td></tr></tfoot>
+  </table>
+  <div class="sg">
+    <div><div class="sl"><input></div><b>Submitted by</b><div class="cr"><span>Date:</span><span class="cln"><input class="cd" placeholder="dd/mm/yyyy"></span></div></div>
+    <div><div class="sl"><input></div><b>Paid by</b><div class="cr"><span>Date:</span><span class="cln"><input class="cd" placeholder="dd/mm/yyyy"></span></div></div>
+    <div><div class="sl"><input></div><b>Approved by</b><div class="cr"><span>Date:</span><span class="cln"><input class="cd" placeholder="dd/mm/yyyy"></span></div></div>
+  </div>
+</div></div>
+<datalist id="dl-mode"><option value="Rickshaw"><option value="CNG"><option value="Bus"><option value="Bike"><option value="Car"><option value="Train"><option value="Launch"><option value="Walking"></datalist>
 <div class="hint" id="hint">Data is saved in your browser automatically. Fill in, then download PDF or Excel.</div>
 </div>
 <div class="copy">© <span id="yr"></span> CLEAN &amp; Abu Naeem. All rights reserved.</div>
@@ -285,14 +330,14 @@ function bindPair(nameEl,posEl){
     const p=find(n);
     if(p){nameEl.value=p.name;if(p.position)posEl.value=p.position}
     else{people.push({name:n,position:posEl.value.trim()});savePeople()}
-    syncSub();save();saveLeave();
+    syncSub();save();saveLeave();saveConv();
   });
   posEl.addEventListener('change',()=>{
     const n=nameEl.value.trim(),v=posEl.value.trim();if(!n||!v)return;
     const p=find(n);
     if(!p){people.push({name:n,position:v});savePeople()}
     else if(p.position!==v){p.position=v;savePeople()}
-    syncSub();save();saveLeave();
+    syncSub();save();saveLeave();saveConv();
   });
 }
 bindPair($('name'),$('pos'));
@@ -325,6 +370,31 @@ function loadLeave(){let q;try{q=JSON.parse(localStorage.getItem(LK))}catch(e){}
 $('leave').addEventListener('input',saveLeave);
 loadLeave();
 
+// ---- local conveyance ----
+const CK='conv_v1';
+function addCRow(load){
+  const tr=document.createElement('tr');
+  tr.innerHTML='<td><button class="del" title="Remove row">×</button><input class="cd" placeholder="dd/mm/yyyy"></td><td><input></td><td><input></td><td><input></td><td><input list="dl-mode" autocomplete="off"></td><td class="a"><input class="ca"></td><td><input></td>';
+  tr.querySelector('.del').onclick=()=>{if($('crows').children.length>1){tr.remove();ccalc();saveConv()}};
+  dateInput(tr.querySelector('.cd'));numInput(tr.querySelector('.ca'));
+  const prev=tr.previousElementSibling;$('crows').appendChild(tr);
+  const pv=tr.previousElementSibling;if(!load&&pv)tr.querySelector('.cd').value=pv.querySelector('.cd').value;
+  return tr;
+}
+function ccalc(){let t=0;document.querySelectorAll('#conv .ca').forEach(i=>t+=num(i.value));$('cTot').textContent=t?fmt(t):''}
+function saveConv(){try{localStorage.setItem(CK,JSON.stringify({n:$('crows').children.length,v:[...$('conv').querySelectorAll('input')].map(e=>e.value)}))}catch(e){}}
+function loadConv(){
+  let q;try{q=JSON.parse(localStorage.getItem(CK))}catch(e){}
+  for(let i=0;i<(q?q.n:8);i++)addCRow(true);
+  if(q)[...$('conv').querySelectorAll('input')].forEach((e,i)=>{if(q.v[i]!=null)e.value=q.v[i]});
+  ccalc();
+}
+document.querySelectorAll('#conv .cd').forEach(dateInput);
+bindPair($('cName'),$('cPos'));
+loadConv();
+$('conv').addEventListener('input',()=>{ccalc();saveConv()});
+$('conv').addEventListener('focusout',saveConv);
+
 // save / restore
 const fields=()=>[...$('sheet').querySelectorAll('input:not([type=file]),textarea')];
 function save(){try{localStorage.setItem(KEY,JSON.stringify({n:$('rows').children.length,v:fields().map(e=>e.value),logo:$('logoImg').src.startsWith('data:')?$('logoImg').src:''}))}catch(e){}}
@@ -336,8 +406,8 @@ function restore(){
   if(s.logo)setLogo(s.logo);
   document.querySelectorAll('.it').forEach(grow);
 }
-function setLogo(src){['','2'].forEach(k=>{$('logoImg'+k).src=src;$('logoImg'+k).hidden=false;$('logoPh'+k).hidden=true})}
-$('logoBox').onclick=$('logoBox2').onclick=()=>$('logoFile').click();
+function setLogo(src){['','2','3'].forEach(k=>{$('logoImg'+k).src=src;$('logoImg'+k).hidden=false;$('logoPh'+k).hidden=true})}
+$('logoBox').onclick=$('logoBox2').onclick=$('logoBox3').onclick=()=>$('logoFile').click();
 $('logoFile').onchange=e=>{
   const f=e.target.files[0];if(!f)return;const r=new FileReader();
   r.onload=()=>{setLogo(r.result);try{localStorage.setItem('clean_logo_v1',r.result)}catch(x){}save()};r.readAsDataURL(f);
@@ -351,29 +421,29 @@ $('yr').textContent=new Date().getFullYear();
 function fit(){
   const w=document.querySelector('.wrap'),c=getComputedStyle(w);
   const k=Math.min(1,(w.clientWidth-parseFloat(c.paddingLeft)-parseFloat(c.paddingRight))/794);
-  [[$('sheet'),$('stage')],[$('leave'),$('stage2')]].forEach(([sh,st])=>{
+  [[$('sheet'),$('stage')],[$('leave'),$('stage2')],[$('conv'),$('stage3')]].forEach(([sh,st])=>{
     sh.style.setProperty('--s',k);sh.style.transformOrigin='0 0';sh.style.transform=k<1?`scale(${k})`:'none';
     st.style.width=794*k+'px';st.style.height=sh.offsetHeight*k+'px';
   });
 }
-new ResizeObserver(fit).observe($('sheet'));new ResizeObserver(fit).observe($('leave'));addEventListener('resize',fit);
+new ResizeObserver(fit).observe($('sheet'));new ResizeObserver(fit).observe($('leave'));new ResizeObserver(fit).observe($('conv'));addEventListener('resize',fit);
 
 // ---- tabs ----
 let tab=1;
+const HINTS={1:'Data is saved in your browser automatically. Fill in, then download PDF or Excel.',2:'Data is saved in your browser automatically. Fill in, select leave type, then download PDF.',3:'Data is saved in your browser automatically. Add rows as needed, then download PDF or Excel.'};
 function show(n){
-  tab=n;$('stage').hidden=n!==1;$('stage2').hidden=n!==2;
-  $('t1').classList.toggle('on',n===1);$('t2').classList.toggle('on',n===2);
-  $('addRow').hidden=$('xlsBtn').hidden=n!==1;
-  $('hint').textContent=n===1?'Data is saved in your browser automatically. Fill in, then download PDF or Excel.':'Data is saved in your browser automatically. Fill in, select leave type, then download PDF.';
+  tab=n;[1,2,3].forEach(i=>{$('stage'+(i===1?'':i)).hidden=n!==i;$('t'+i).classList.toggle('on',n===i)});
+  $('addRow').hidden=n===2;$('xlsBtn').hidden=n===2;
+  $('hint').textContent=HINTS[n];
   try{localStorage.setItem('clean_tab',n)}catch(e){}
   fit();
 }
-$('t1').onclick=()=>show(1);$('t2').onclick=()=>show(2);
+$('t1').onclick=()=>show(1);$('t2').onclick=()=>show(2);$('t3').onclick=()=>show(3);
 try{const lg=localStorage.getItem('clean_logo_v1');if(lg)setLogo(lg)}catch(e){}
-show(+localStorage.getItem('clean_tab')===2?2:1);
+{const t=+localStorage.getItem('clean_tab');show([1,2,3].includes(t)?t:1)}
 $('sheet').addEventListener('input',()=>{syncSub();calc();save()});
-$('addRow').onclick=()=>{addRow();calc();save()};
-$('reset').onclick=()=>{if(confirm('Clear all data of this tab?')){localStorage.removeItem(tab===1?KEY:LK);location.reload()}};
+$('addRow').onclick=()=>{if(tab===3){addCRow();ccalc();saveConv()}else{addRow();calc();save()}};
+$('reset').onclick=()=>{if(confirm('Clear all data of this tab?')){localStorage.removeItem(tab===1?KEY:tab===2?LK:CK);location.reload()}};
 
 const fname=()=>'Expenditure_TopSheet_'+(($('name').value||'Staff').trim().replace(/\s+/g,'_'))+'_'+($('date').value||'').replace(/\//g,'-');
 function dl(blob,name){const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),2000)}
@@ -452,10 +522,65 @@ async function pdfLeave(){
   sh.style.cssText=keep[0];st.style.cssText=keep[1];wr.style.overflow=keep[2];window.scrollTo(0,keep[3]);
   btn.disabled=false;btn.textContent='Download PDF';fit();
 }
-$('pdfBtn').onclick=()=>tab===1?pdfSheet():pdfLeave();
+async function pdfConv(){
+  const sh=$('conv'),st=$('stage3'),wr=document.querySelector('.wrap'),btn=$('pdfBtn');
+  const keep=[sh.style.cssText,st.style.cssText,wr.style.overflow,window.scrollY];
+  btn.disabled=true;btn.textContent='Creating PDF…';
+  sh.classList.add('capturing');
+  sh.style.transform='none';st.style.cssText='width:794px;height:auto;margin:0';wr.style.overflow='visible';window.scrollTo(0,0);
+  try{
+    await new Promise(r=>setTimeout(r,60));
+    const c=await html2canvas(sh,{scale:3,windowWidth:1000,scrollX:0,scrollY:0,backgroundColor:'#fff',onclone:doc=>{
+      const o=[...sh.querySelectorAll('input')],n=[...doc.getElementById('conv').querySelectorAll('input')];
+      n.forEach((el,i)=>{
+        const stl=doc.defaultView.getComputedStyle(el),d=doc.createElement('div');
+        d.textContent=o[i].value;
+        Object.assign(d.style,{fontFamily:stl.fontFamily,fontSize:stl.fontSize,textAlign:stl.textAlign,width:stl.width,height:stl.height,lineHeight:stl.height,whiteSpace:'pre',overflow:'hidden'});
+        el.replaceWith(d);
+      });
+    }});
+    const {jsPDF}=window.jspdf,pdf=new jsPDF('l','mm','a4');
+    const k=Math.min(297/794,210/(c.height/3)),w=794*k,h=c.height/3*k;
+    pdf.addImage(c.toDataURL('image/jpeg',.95),'JPEG',(297-w)/2,0,w,h);
+    pdf.save('Local_Conveyance_'+(($('cName').value||'Staff').trim().replace(/\s+/g,'_'))+'_'+($('cSub').value||'').replace(/\//g,'-')+'.pdf');
+  }catch(e){alert('PDF error: '+e.message)}
+  sh.classList.remove('capturing');
+  sh.style.cssText=keep[0];st.style.cssText=keep[1];wr.style.overflow=keep[2];window.scrollTo(0,keep[3]);
+  btn.disabled=false;btn.textContent='Download PDF';fit();
+}
+async function xlsConv(){
+  const wb=new ExcelJS.Workbook(),ws=wb.addWorksheet('Local Conveyance',{pageSetup:{paperSize:9,orientation:'landscape',fitToPage:true,fitToWidth:1,fitToHeight:0}});
+  ws.columns=[{width:13},{width:20},{width:20},{width:20},{width:13},{width:14},{width:22}];
+  const thin={style:'thin'},bd={top:thin,left:thin,bottom:thin,right:thin};
+  const set=(a,v,o={})=>{const c=ws.getCell(a);c.value=v;c.font={name:'Times New Roman',size:o.size||11,bold:!!o.bold};c.alignment={horizontal:o.al||'left',vertical:'middle',wrapText:true};if(o.nf)c.numFmt=o.nf;if(o.b)c.border=bd;return c};
+  const hv=['cSub','cName','cPos'].map(i=>$(i).value),pi=[...$('conv').querySelectorAll('.c2 input')].map(i=>i.value);
+  ws.mergeCells('A1:G1');set('A1','LOCAL CONVEYANCE SHEET',{size:16,bold:true,al:'center'});ws.getRow(1).height=28;
+  ws.mergeCells('E2:G2');set('E2','Submission Date: '+hv[0],{al:'right'});
+  ws.mergeCells('A3:D3');set('A3','Name of staff: '+pi[0],{bold:true});ws.mergeCells('E3:G3');set('E3','Position: '+pi[1],{bold:true});
+  ws.mergeCells('A4:D4');set('A4','Project: '+pi[2],{bold:true});ws.mergeCells('E4:G4');set('E4','Programme: '+pi[3],{bold:true});
+  ['Date','From','to/via','To','Mode','Amount','Remarks'].forEach((h,i)=>set(String.fromCharCode(65+i)+'6',h,{bold:true,al:'center',b:1}));
+  const nf='#,##0.00;-#,##0.00;"-"';let r=7;
+  document.querySelectorAll('#crows tr').forEach(tr=>{
+    const x=[...tr.querySelectorAll('input')];
+    x.forEach((e,i)=>{const L=String.fromCharCode(65+i);
+      if(i===5){const v=num(e.value);set(L+r,v||null,{b:1,nf,al:'right'})}else set(L+r,e.value,{b:1})});
+    ws.getRow(r).height=22;r++;
+  });
+  set('E'+r,'Total:',{bold:true,al:'right'});set('F'+r,{formula:`SUM(F7:F${r-1})`},{bold:true,b:1,nf,al:'right'});
+  r+=3;
+  const sg=[...$('conv').querySelectorAll('.sg > div')];
+  sg.forEach((d,i)=>{
+    const L=['A','D','G'][i],ins=d.querySelectorAll('input');
+    set(L+r,ins[0].value);ws.getCell(L+r).border={bottom:thin};
+    set(L+(r+1),d.querySelector('b').textContent,{bold:true});set(L+(r+2),'Date: '+ins[1].value);
+  });
+  const buf=await wb.xlsx.writeBuffer();
+  dl(new Blob([buf],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'}),'Local_Conveyance_'+(($('cName').value||'Staff').trim().replace(/\s+/g,'_'))+'_'+($('cSub').value||'').replace(/\//g,'-')+'.xlsx');
+}
+$('pdfBtn').onclick=()=>tab===1?pdfSheet():tab===2?pdfLeave():pdfConv();
 
 // Excel
-$('xlsBtn').onclick=async()=>{
+async function xlsSheet(){
   const wb=new ExcelJS.Workbook(),ws=wb.addWorksheet('TOP Sheet',{pageSetup:{paperSize:9,fitToPage:true,fitToWidth:1,fitToHeight:1}});
   ws.columns=[{width:13},{width:30},{width:12},{width:11},{width:13},{width:12},{width:10},{width:10},{width:14}];
   const thin={style:'thin'},bd={top:thin,left:thin,bottom:thin,right:thin};
@@ -500,7 +625,8 @@ $('xlsBtn').onclick=async()=>{
   });
   const buf=await wb.xlsx.writeBuffer();
   dl(new Blob([buf],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'}),fname()+'.xlsx');
-};
+}
+$('xlsBtn').onclick=()=>tab===3?xlsConv():xlsSheet();
 </script>
 </body>
 </html>
